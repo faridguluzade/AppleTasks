@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import DashboardPage from "./components/organisms/DashboardPage";
+import LoginPage from "./components/organisms/LoginPage";
+import RegisterPage from "./components/organisms/RegisterPage";
+import TaskPage from "./components/organisms/TaskPage";
+import TaskDetailPage from "./components/organisms/TaskDetailPage";
 
-function App() {
+import "react-toastify/dist/ReactToastify.css";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <DashboardPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
+  },
+  {
+    path: "/tasks",
+    children: [
+      {
+        index: true,
+        element: <TaskPage />,
+      },
+      {
+        path: ":id",
+        element: <TaskDetailPage />,
+      },
+    ],
+  },
+]);
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ToastContainer></ToastContainer>
+      <RouterProvider router={router} />
     </div>
   );
-}
+};
 
 export default App;
